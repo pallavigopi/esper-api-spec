@@ -8,7 +8,7 @@ jobs:
      script:
       - git clone --quiet https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
       - cd esper-sdk-config
-      - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3)
+      - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1)
       - python3 update_version.py
       - git config --global user.email "travis@travis-ci.org"
       - git config --global user.name "Travis CI"
@@ -32,6 +32,6 @@ jobs:
       - git status
       - git diff-index --quiet HEAD || git commit -m "$TRAVIS_BUILD_NUMBER generate proper commit message"
       - git push -u origin sdk-build-automation
-      - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3)
-      - git tag -a "v$SDK_VERSION" -m "Generate tag message"
+      - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1)
+      - git tag -a v$SDK_VERSION -m "Generate tag message"
       - git push origin "v$SDK_VERSION"
