@@ -33,5 +33,5 @@ jobs:
       - git diff-index --quiet HEAD || git commit -m "$TRAVIS_BUILD_NUMBER generate proper commit message"
       - git push -u origin sdk-build-automation
       - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3)
-      - git tag -a v$SDK_VERSION -m "Generate tag message"
-      - git push origin v$SDK_VERSION
+      - git tag -a "v$SDK_VERSION" -m "Generate tag message"
+      - git push origin "v$SDK_VERSION"
