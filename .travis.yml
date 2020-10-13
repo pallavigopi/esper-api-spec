@@ -14,7 +14,7 @@ jobs:
       - git config --global user.email "travis@travis-ci.org"
       - git config --global user.name "Travis CI"
       - git add sdk-config/python-config.json
-      - git diff-index --quiet HEAD || git commit -m "$TRAVIS_BUILD_NUMBER Update SDK Version number"
+      - git diff-index --quiet HEAD || git commit -m "(Travis build $TRAVIS_BUILD_NUMBER) Update SDK Version number"
       - git push -u origin sdk-build-automation
    - stage: SDK Generation
      language: java
