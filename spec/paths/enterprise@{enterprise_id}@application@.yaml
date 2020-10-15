@@ -7,17 +7,17 @@ get:
   parameters:
     - name: application_name
       in: query
-      description: filter by application name
+      description: Filter by application name
       required: false
       type: string
     - name: package_name
       in: query
-      description: filter by package name
+      description: Filter by package name
       required: false
       type: string
     - name: is_hidden
       in: query
-      description: filter default esper apps
+      description: Filter default esper apps
       required: false
       type: boolean
     - name: limit
