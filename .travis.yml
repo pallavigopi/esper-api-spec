@@ -9,7 +9,7 @@ jobs:
      script:
       - git clone https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
       - cd esper-sdk-config
-      - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1)
+      - export SDK_VERSION=$( git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1 | cut -b 2-)
       - python3 update_version.py
       - git config --global user.email "travis@travis-ci.org"
       - git config --global user.name "Travis CI"
@@ -36,5 +36,5 @@ jobs:
       - git diff-index --quiet HEAD || git commit -m "$COMMIT_MESSAGE"
       - git push -u origin sdk-build-automation
       - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1)
-      - git tag -a v$SDK_VERSION -m "$COMMIT_MESSAGE"
-      - git push origin "v$SDK_VERSION"
+      - git tag -a $SDK_VERSION -m "$COMMIT_MESSAGE"
+      - git push origin $SDK_VERSION
