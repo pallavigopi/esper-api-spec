@@ -5,11 +5,11 @@ jobs:
  include:
    - stage: Version Updation for sdk config
      language: python
-     if: tag IS present
+     if: tag IS present AND (branch = sdk-build-automation)
      script:
       - git clone https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
       - cd esper-sdk-config
-      - export SDK_VERSION=$( git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1 | cut -b 2-)
+      - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1 | cut -b 2-)
       - python3 update_version.py
       - git config --global user.email "travis@travis-ci.org"
       - git config --global user.name "Travis CI"
@@ -19,11 +19,11 @@ jobs:
    - stage: SDK Generation
      language: java
      jdk: openjdk8
-     if: tag IS present
+     if: tag IS present AND (branch = sdk-build-automation)
      script:
       - git clone https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
       - cd esper-sdk-config
-      - cat sdk-config/python-config.json | grep "packageVersion"
+      - ./pull_api_spec.sh
       - wget -q https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.4/swagger-codegen-cli-2.4.4.jar
       - git clone https://$GITHUB_TOKEN@github.com/pallavigopi/esper-client-py.git -b sdk-build-automation
       - java -jar swagger-codegen-cli-2.4.4.jar generate -i ./esper-api-spec.yaml -l python -c ./sdk-config/python-config.json --template-dir ./sdk-templates/python/ -o esper-client-py
