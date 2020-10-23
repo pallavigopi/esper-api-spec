@@ -3,22 +3,23 @@ python:
   - "3.6"
 jobs:
  include:
-   - stage: Version Updation for sdk config
-     language: python
-     script:
-      - git clone https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
-      - cd esper-sdk-config
-      - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1 | cut -b 2-)
-      - python3 update_version.py
-      - git config --global user.email "travis@travis-ci.org"
-      - git config --global user.name "Travis CI"
-      - git add sdk-config/python-config.json
-      - git diff-index --quiet HEAD || git commit -m "(Travis build $TRAVIS_BUILD_NUMBER) Update SDK Version number"
-      - git push -u origin sdk-build-automation
+#    - stage: Version Updation for sdk config
+#      language: python
+#      script:
+#       - git clone https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
+#       - cd esper-sdk-config
+#       - export SDK_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/pallavigopi/esper-api-spec | cut --delimiter='/' --fields=3 | tail --lines=1 | cut -b 2-)
+#       - python3 update_version.py
+#       - git config --global user.email "travis@travis-ci.org"
+#       - git config --global user.name "Travis CI"
+#       - git add sdk-config/python-config.json
+#       - git diff-index --quiet HEAD || git commit -m "(Travis build $TRAVIS_BUILD_NUMBER) Update SDK Version number"
+#       - git push -u origin sdk-build-automation
    - stage: SDK Generation
      language: java
      jdk: openjdk8
      script:
+      - ls
       - COMMIT_MESSAGE=$(git log --format='%b' --merges -1)
       - git clone https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
       - cd esper-sdk-config
