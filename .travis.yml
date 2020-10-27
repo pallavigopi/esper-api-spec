@@ -21,7 +21,7 @@ jobs:
      script:
       - ls
       - git remote -v
-      - git fetch origin
+      - git fetch origin master
       - git branch -v
       - export COMMIT_MESSAGE=$(git log --format='%b' --merges -1 master)
       - echo $COMMIT_MESSAGE
