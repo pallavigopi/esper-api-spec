@@ -20,10 +20,8 @@ jobs:
      jdk: openjdk8
      script:
       - ls
-      - git remote -v
-      - git fetch origin master && git checkout -b master origin/master
       - git branch -v
-      - export COMMIT_MESSAGE=$(git log --format='%b' --merges -1 master)
+      - export COMMIT_MESSAGE=$(git log --format='%b' --merges -1 origin/master)
       - echo $COMMIT_MESSAGE
       - git clone https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
       - cd esper-sdk-config
