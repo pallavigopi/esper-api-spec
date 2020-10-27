@@ -21,7 +21,7 @@ jobs:
      script:
       - ls
       - git branch -v
-      - git checkout master
+      - git fetch origin
       - export COMMIT_MESSAGE=$(git log --format='%b' --merges -1 master)
       - echo $COMMIT_MESSAGE
       - git clone https://pallavigopi:$BITBUCKET_TOKEN@bitbucket.org/shoonyacloud/esper-sdk-config.git -b sdk-build-automation
